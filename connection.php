@@ -1,22 +1,26 @@
 <?php
-class connect{
+class Connection{
 
-    public $server;
-    public $user;
-    public $password;
+   public $gdb = NULL;
 
-    public function __construct()
-    {
-	$link =  mysql_connect($this->server, $this->user, $this->password);
-	if (!$link)
-    	die('No pudo conectarse: ' . mysql_error());
+	public function __construct(){
+	}
 
-	
+	public function openConnection(){
+		$dsn = 'mysql:host=gimli.ii.uam.es;dbname=hackathon_solidario';
+		$nombre_usuario = 'grupo1';
+		$contrasena = 'googleglass';
+		$opciones = array(
+			PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+		); 
 
-    }
-/*
-    public function ()
-    {
-    }
-*/
+		try{
+			$this->gdb = new PDO($dsn, $nombre_usuario, $contrasena, $opciones);
+			return true;		
+		
+		}catch(PDOException $e){
+			echo "An error ocurred\n", $ex->getMessage();
+			return false;
+		}
+	}
 }
